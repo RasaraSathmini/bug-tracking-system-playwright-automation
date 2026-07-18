@@ -1,2 +1,3 @@
-# bug-tracking-system-playwright-automation
-End-to-end automation framework for Bug Tracking System using Playwright and Javascript
+# Bug Tracking System - Playwright Automation Framework
+## Overview
+This repository contains an end-to-end (E2E) automation framework developed using Playwright and JavaScript for validating the functionality, reliability, and user workflows of the Bug Tracking System.
