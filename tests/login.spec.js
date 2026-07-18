@@ -1,19 +1,28 @@
-// @ts-check
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage.js';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+const VALID_EMAIL = 'admin@example.com';
+const VALID_PASSWORD = 'password123';
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+test.describe('Login', () => {
+  test('login form renders as expected', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+    await expect(loginPage.heading).toBeVisible();
+    await expect(loginPage.emailInput).toBeVisible();
+    await expect(loginPage.passwordInput).toBeVisible();
+    await expect(loginPage.rememberMeCheckbox).not.toBeChecked();
+    await expect(loginPage.submitButton).toBeVisible();
+  });
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  test('shows the dashboard after a valid login', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login(VALID_EMAIL, VALID_PASSWORD);
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+    await expect(page).toHaveURL(/.*dashboard/);
+    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+  });
+
 });
