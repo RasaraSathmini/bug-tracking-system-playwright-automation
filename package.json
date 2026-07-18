@@ -1,0 +1,22 @@
+{
+  "name": "bug-tracking-system-playwright-automation",
+  "version": "1.0.0",
+  "description": "This repository contains an end-to-end (E2E) automation framework developed using **Playwright** and **JavaScript** for validating the functionality, reliability, and user workflows of the Bug Tracking System.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RasaraSathmini/bug-tracking-system-playwright-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RasaraSathmini/bug-tracking-system-playwright-automation/issues"
+  },
+  "homepage": "https://github.com/RasaraSathmini/bug-tracking-system-playwright-automation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1"
+  }
+}
