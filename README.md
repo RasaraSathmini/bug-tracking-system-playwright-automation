@@ -86,7 +86,7 @@ git clone <repository-url>
 Navigate into the project:
 
 ```bash
-cd bug-tracking-system-playwright
+cd bug-tracking-system-playwright-automation
 ```
 
 Install dependencies:
