@@ -17,6 +17,7 @@
   "homepage": "https://github.com/RasaraSathmini/bug-tracking-system-playwright-automation#readme",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.1"
+    "@types/node": "^26.1.1",
+    "wait-on": "^9.1.0"
   }
 }
