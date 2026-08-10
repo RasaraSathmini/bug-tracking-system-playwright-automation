@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "This repository contains an end-to-end (E2E) automation framework developed using **Playwright** and **JavaScript** for validating the functionality, reliability, and user workflows of the Bug Tracking System.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "docker compose up -d --build",
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "test:report": "npx playwright show-report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RasaraSathmini/bug-tracking-system-playwright-automation.git"
