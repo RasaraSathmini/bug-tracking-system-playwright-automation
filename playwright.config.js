@@ -5,7 +5,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI, // fail CI if a test.only was left in
   retries: process.env.CI ? 2 : 0, // retry flaky tests in CI, not locally
-  workers: process.env.CI ? 4 : undefined,
+  workers: process.env.CI ? 1 : undefined,
   reporter: [['html'], ['list']],
 
   use: {

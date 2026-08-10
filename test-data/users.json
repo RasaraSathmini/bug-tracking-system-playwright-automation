@@ -1,0 +1,15 @@
+{
+  "Admin": {
+    "email": "admin@example.com",
+    "password": "password123"
+  }
+
+ "Developer": {
+   "email": "dev@example.com",
+  "password": "password123"}
+
+"Tester": {
+  "email": "tester@example.com",
+  "password": "password123"}
+
+}
