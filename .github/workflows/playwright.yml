@@ -1,42 +1,66 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    
-    - name: Start Docker containers
-      run: docker compose up -d --build
-      env:
-        NODE_ENV: test
-    
-    - name: Wait for server to be ready
-      run: npx wait-on http://localhost:5000 --timeout 60000 --interval 1000
-    
-    - name: Run Playwright tests
-      run: npx playwright test --workers=1
-    
-    - name: Upload test report
-      if: ${{ !cancelled() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-    
-    - name: Stop Docker containers
-      if: ${{ always() }}
-      run: docker compose down
+      - name: Check out test suite
+        uses: actions/checkout@v7
+
+      - name: Check out application
+        uses: actions/checkout@v7
+        with:
+          repository: Nimesha-Premaraja/bug-tracker
+          path: bug-tracker
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start application
+        working-directory: bug-tracker
+        run: docker compose up -d --build --wait --wait-timeout 120
+
+      - name: Wait for application
+        run: npx wait-on http://127.0.0.1:5000/auth/login --timeout 120000 --interval 1000
+
+      - name: Run Playwright tests
+        env:
+          CI: true
+          BASE_URL: http://127.0.0.1:5000
+        run: npx playwright test
+
+      - name: Show application logs
+        if: ${{ failure() }}
+        working-directory: bug-tracker
+        run: docker compose logs --no-color
+
+      - name: Upload test report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Stop application
+        if: ${{ always() }}
+        working-directory: bug-tracker
+        run: docker compose down --volumes --remove-orphans
