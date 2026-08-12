@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage.js';
 import { log } from 'node:console';
 
-const VALID_EMAIL = 'rasara@example.com';
-const VALID_PASSWORD = 'Test@123';
+const VALID_EMAIL = 'tester@example.com';
+const VALID_PASSWORD = 'password123';
 const NEW_PASSWORD = 'NewPassword123!';
 const USERNAME = 'Rasara';
 
