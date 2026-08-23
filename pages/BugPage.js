@@ -29,6 +29,10 @@ export class BugPage {
     this.deleteButton = page.getByRole('button', {
       name: 'Delete'
     });
+
+    // Bugs list filters and rows
+    this.statusFilter = page.locator('select').nth(0);
+    this.bugRows = page.locator('table tbody tr');
   }
 
   async navigateToBugs() {
@@ -46,6 +50,15 @@ export class BugPage {
     await this.descriptionInput.fill(description);
     await this.prioritySelect.selectOption(priority);
     await this.createBugButton.click();
+  }
+
+  getBugRows() {
+    return this.bugRows;
+  }
+
+  async filterBugsByStatus(status) {
+    await this.statusFilter.selectOption(status);
+    await this.page.getByRole('button', { name: 'Filter' }).click();
   }
 
   async openBug(title) {
