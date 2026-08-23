@@ -1,9 +1,9 @@
 import { test, expect } from '../fixtures/test-fixtures.js';
 import { BugPage } from '../pages/BugPage.js';
 
-test.describe('Filter Bugs', () => {
+test.describe('Search Bugs', () => {
 
-    test('filter bugs by status', async ({ loggedInPage}) => {
+    test('Search bugs by title', async ({ loggedInPage}) => {
 
         const bugPage = new BugPage(loggedInPage);
 
