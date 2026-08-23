@@ -5,7 +5,7 @@ export class LoginPage {
   constructor(page) {
     this.page = page;
 
-    // Labels render as "Email:" / "Password:" (with trailing colon), so
+    // Labels render as "Email:" / "Password:", so
     // getByLabel needs exact: false to match on the visible text.
     this.heading = page.getByRole('heading', { name: 'Login' });
     this.emailInput = page.getByLabel('Email:', { exact: false });
