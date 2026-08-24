@@ -6,6 +6,7 @@ test.describe('Filter Bugs', () => {
     test('filter bugs by status', async ({ loggedInPage}) => {
 
         const bugPage = new BugPage(loggedInPage);
+        const bugDescription = 'This is a sample bug description for testing purposes.';
 
         // Verify login
         await expect(loggedInPage).toHaveURL(/.*dashboard/);
@@ -17,7 +18,7 @@ test.describe('Filter Bugs', () => {
         console.log('Navigated to Bugs page');
         await loggedInPage.waitForTimeout(2000);
 
-        // Navigate to Create Bug
+        // Create bug with status Open
         await bugPage.navigateToCreateBug();
 
         await expect(
@@ -26,19 +27,74 @@ test.describe('Filter Bugs', () => {
 
         await loggedInPage.waitForTimeout(2000);
 
-        // create a new bug to ensure there is at least one bug to filter
-        const bugTitle = 'Sample Bug Title1';
-        const bugDescription =
-            'This is a sample bug description for testing purposes.';
+        const openBugTitle = 'Sample Open Filter Bug';
 
         await bugPage.createBug(
-            bugTitle,
+            openBugTitle,
             bugDescription,
             'High'
         );
 
-        console.log('Bug created successfully');
+        console.log('Open test bug created successfully');
         await loggedInPage.waitForTimeout(2000);
+
+        // Navigate to Bugs to create 2nd bug
+        await bugPage.navigateToBugs();
+
+        // Create bug with status In Progress
+        await bugPage.navigateToCreateBug();
+
+        await expect(
+        bugPage.createBugHeading
+        ).toBeVisible();
+
+        const inProgressBugTitle = 'Sample In Progress Filter Bug';
+
+        await bugPage.createBug(
+            inProgressBugTitle,
+            bugDescription,
+            'Low'
+        );
+
+        console.log('In Progress test bug created successfully');
+        await loggedInPage.waitForTimeout(2000);
+
+        // Edit bug to change status to In Progress
+        await bugPage.changeStatus('in_progress');
+
+        // Verify status update message
+        await expect(loggedInPage.getByText('Status changed to in_progress.')).toBeVisible();
+
+        console.log('Bug status changed to In Progress');
+
+        // Navigate to Bugs to create 3rd bug
+        await bugPage.navigateToBugs();
+
+        // Create bug with status Closed
+        await bugPage.navigateToCreateBug();
+
+        await expect(
+        bugPage.createBugHeading
+        ).toBeVisible();
+
+        const closedBugTitle = 'Sample Closed Filter Bug';
+
+        await bugPage.createBug(
+            closedBugTitle,
+            bugDescription,
+            'Medium'
+        );
+
+        console.log('Closed test bug created successfully');
+        await loggedInPage.waitForTimeout(2000);
+
+        // Edit bug to change status to Closed
+        await bugPage.changeStatus('closed');
+
+        // Verify that the status has been updated
+        await expect(loggedInPage.getByText('Status changed to closed.')).toBeVisible();
+
+        console.log('Bug status changed to Closed');
 
         // Navigate back to Bugs
         await bugPage.navigateToBugs();

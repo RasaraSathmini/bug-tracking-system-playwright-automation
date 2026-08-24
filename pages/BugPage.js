@@ -33,6 +33,10 @@ export class BugPage {
     // Bugs list filters and rows
     this.statusFilter = page.locator('select').nth(0);
     this.bugRows = page.locator('table tbody tr');
+
+    // Status filter button inside a created bug
+    this.statusSelect = page.locator('select[name="status"]');
+
   }
 
   async navigateToBugs() {
@@ -69,6 +73,10 @@ export class BugPage {
 
     await this.page.waitForURL(/.*bugs\/\d+/);
   }
+
+  async changeStatus(status) {
+    await this.statusSelect.selectOption(status);
+}
 
   async deleteBug() {
     this.page.once('dialog', async dialog => {
