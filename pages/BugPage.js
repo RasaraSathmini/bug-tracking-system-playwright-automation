@@ -34,8 +34,12 @@ export class BugPage {
     this.statusFilter = page.locator('select').nth(0);
     this.bugRows = page.locator('table tbody tr');
 
+    this.priorityFilter = page.locator('select').nth(0);
+    this.bugRows = page.locator('table tbody tr');
+
     // Status filter button inside a created bug
     this.statusSelect = page.locator('select[name="status"]');
+    this.priorityFilter = page.locator('select[name="priority"]');
 
   }
 
@@ -62,6 +66,12 @@ export class BugPage {
 
   async filterBugsByStatus(status) {
     await this.statusFilter.selectOption(status);
+    await this.page.getByRole('button', { name: 'Filter' }).click();
+  }
+
+  async filterBugsByPriority(priority) {
+    await this.priorityFilter.selectOption(priority);
+    // Click the common 'Filter' button to apply the priority filter (no separate 'Priority' button exists)
     await this.page.getByRole('button', { name: 'Filter' }).click();
   }
 
